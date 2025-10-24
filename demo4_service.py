@@ -268,6 +268,6 @@ if __name__ == "__main__":
     uvicorn.run(
         "demo4_service:app",
         host="0.0.0.0",
-        port=8003,
+        port=8001,
         reload=True,
     )
