@@ -250,6 +250,12 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+async def health_check():
+    """健康检查端点"""
+    return {"status": "healthy", "service": "business-insighter", "version": "1.0.0"}
+
+
 @app.post("/api/v1/run-analysis", response_model=Demo4Result)
 async def run_analysis_endpoint(payload: Demo4Request) -> Demo4Result:
     try:
@@ -264,10 +270,12 @@ async def run_analysis_endpoint(payload: Demo4Request) -> Demo4Result:
 
 if __name__ == "__main__":
     import uvicorn
+    import os
 
+    port = int(os.getenv("PORT", 8000))
     uvicorn.run(
         "demo4_service:app",
         host="0.0.0.0",
-        port=8001,
-        reload=True,
+        port=port,
+        reload=False,  # Disable reload in production
     )
